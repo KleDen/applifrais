@@ -16,10 +16,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-   
-    Route::get('/fiches/create', [FicheFraisController::class, 'create'])->name('fiches.create');
-    Route::post('/fiches', [FicheFraisController::class, 'store'])->name('fiches.store');
-    
+      
+    // Fiches frais
+    Route::resource('fiches', FicheFraisController::class);
+
+    // Frais forfaitaires (ajout ligne)
+    Route::post('/fiches/{id}/forfaitaires', [LigneFraisForfaitController::class, 'store'])->name('forfaitaires.store');
+
+    // Frais hors forfait (ajout ligne + justificatif)
+    Route::post('/fiches/{id}/horsforfait', [LigneFraisHorsForfaitController::class, 'store'])->name('horsforfait.store'); 
+
+
 });
 
 
