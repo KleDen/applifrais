@@ -3,13 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FicheFraisController;
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    Carbon::setLocale('fr');
+    $today = Carbon::now()->isoFormat('dddd D MMMM YYYY');
+    return view('dashboard', ['today' => $today]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
