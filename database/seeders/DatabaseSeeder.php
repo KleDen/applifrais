@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             EtatsTableSeeder::class,
+            FraisForfaitTableSeeder::class,
             // Добавь сюда другие сидеры по мере необходимости
         ]);
     }
