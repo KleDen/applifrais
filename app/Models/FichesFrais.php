@@ -12,12 +12,12 @@ class FichesFrais extends Model
     protected $table = 'fiches_frais';
 
     protected $fillable = [
-        'mois', 'annee', 'nb_justificatifs', 'montant_valide', 'date_modif', 'id_visiteur', 'id_etat'
+        'mois', 'annee', 'nb_justificatifs', 'montant_valide', 'date_modif', 'user_id', 'etat_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_visiteur');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function lignesForfait()
@@ -32,6 +32,6 @@ class FichesFrais extends Model
 
     public function etat()
     {
-        return $this->belongsTo(Etat::class, 'id_etat');
+        return $this->belongsTo(Etat::class, 'etat_id');
     }
 }

@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function fichesFrais()
     {
-        return $this->hasMany(FichesFrais::class, 'id_visiteur');
+        return $this->hasMany(FichesFrais::class, 'user_id');
     }
 }

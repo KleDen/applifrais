@@ -21,9 +21,8 @@ class FicheFraisController extends Controller
     public function index(): View
     {
         $user = auth()->user();
-        $fiches = FichesFrais::with(['lignesForfait.forfait', 'lignesHorsForfait', 'etat'])
-            ->where('id_visiteur', $user->id)
-            ->orderByDesc('annee')
+        $fiches = FichesFrais::with(['lignesForfait.forfait', 'lignesHorsForfait', 'etat_id'])
+            ->where('user_id', $user->id)
             ->orderByDesc('mois')
             ->get();
         return view('fiches.index', compact('fiches'));
@@ -48,8 +47,8 @@ class FicheFraisController extends Controller
             // здесь можно добавить валидацию для остальных полей
         ]);
         $fiche = new FichesFrais($data);
-        $fiche->id_visiteur = auth()->id();
-        $fiche->id_etat = 1; // ID начального состояния (например "CL" – "Créée")
+        $fiche->user_id = auth()->id();
+        $fiche->etat_id = 1; // ID начального состояния (например "CL" – "Créée")
         $fiche->montant_valide = 0;    // начальное значение
         $fiche->save();
         return redirect()
