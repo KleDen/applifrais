@@ -44,4 +44,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }            
+
+    public function fichesFrais()
+    {
+        return $this->hasMany(FichesFrais::class, 'id_visiteur');
+    }
 }

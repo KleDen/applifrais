@@ -10,10 +10,10 @@
             <div class="bg-white overflow-hidden shadow sm:rounded-lg p-8">
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-gray-900">
-                        Bonjour, {{ auth()->user()->name }} !
+                        Bonjour, {{ auth()->user()->prenom }} !
                     </h1>
                     <p class="text-gray-600 mt-1">
-                        Nous sommes le <span class="font-semibold">{{ $today }}</span>
+                        Bienvenue sur votre espace Applifrais.
                     </p>
                 </div>
                 <div class="mb-8">
@@ -28,13 +28,9 @@
                        class="w-full inline-block px-6 py-4 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition">
                         📄 Consulter mes fiches de frais
                     </a>
-                    <a href="{{ route('horsforfait.store', ['id' => 1]) }}"
-                       class="w-full inline-block px-6 py-4 bg-yellow-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition">
-                        ➕ Ajouter un frais hors forfait
-                    </a>
                     <a href="#"
-                       class="w-full inline-block px-6 py-4 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-purple-700 transition">
-                        📎 Gérer mes justificatifs
+                       class="w-full inline-block px-6 py-4 bg-yellow-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition">
+                        ✏️ Modifier une fiche
                     </a>
                 </div>
             </div>
