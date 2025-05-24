@@ -15,10 +15,10 @@ class EtatsTableSeeder extends Seeder
     {
         {
             DB::table('etats')->insert([
-                ['id' => 'CL', 'libelle' => 'Saisie clôturée'],
                 ['id' => 'CR', 'libelle' => 'Fiche créée, saisie en cours'],
-                ['id' => 'RB', 'libelle' => 'Remboursée'],
+                ['id' => 'CL', 'libelle' => 'Saisie clôturée'],
                 ['id' => 'VA', 'libelle' => 'Validée et mise en paiement'],
+                ['id' => 'RB', 'libelle' => 'Remboursée'],
             ]);
         }
     }
