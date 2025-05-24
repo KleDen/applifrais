@@ -21,13 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
       
     // Fiches frais
-    Route::resource('fiches', FicheFraisController::class);
+    Route::resource('fiches', FicheFraisController::class)
+     ->parameters(['fiches' => 'fiche']);
 
-    // Frais forfaitaires (ajout ligne)
-    Route::post('/fiches/{id}/forfaitaires', [LigneFraisForfaitController::class, 'store'])->name('forfaitaires.store');
-
-    // Frais hors forfait (ajout ligne + justificatif)
-    Route::post('/fiches/{id}/horsforfait', [LigneFraisHorsForfaitController::class, 'store'])->name('horsforfait.store'); 
 
 
 });

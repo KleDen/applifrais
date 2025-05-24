@@ -24,4 +24,9 @@ class LigneFraisForfait extends Model
     {
         return $this->belongsTo(FraisForfait::class, 'frais_forfait_id');
     }
+    public function forfait()
+{
+    return $this->belongsTo(FraisForfait::class, 'frais_forfait_id');
+}
+
 }

@@ -103,16 +103,6 @@ foreach ($forfaits as $forfait) {
         ->with('success', 'Fiche de frais créée avec succès.');
 }
 
-
-    /**
-     * Просмотр одной fiche.
-     */
-    public function show(FichesFrais $fiche): View
-    {
-        $fiche->load(['lignesForfait.forfait', 'lignesHorsForfait', 'etat']);
-        return view('fiches.show', compact('fiche'));
-    }
-
     /**
      * Форма редактирования fiche.
      */

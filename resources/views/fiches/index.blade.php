@@ -45,24 +45,11 @@
                                     <td class="px-4 py-2 text-right">
                                         {{ number_format($fiche->lignesHorsForfait->sum('montant'), 2) }}
                                     </td>
+                                     {{-- EDIT --}}
                                     <td class="px-4 py-2 text-center space-x-2">
-                                        {{-- Просмотр / редактирование --}}
-                                        <a href="{{ route('fiches.show', $fiche) }}"
-                                           class="text-blue-600 hover:underline">Voir</a>
-                                        <a href="{{ route('fiches.edit', $fiche) }}"
+                                        <a href="{{ route('fiches.edit', $fiche) }}" 
                                            class="text-yellow-600 hover:underline">Éditer</a>
-                                        {{-- Удаление --}}
-                                        <form action="{{ route('fiches.destroy', $fiche) }}"
-                                              method="POST"
-                                              class="inline"
-                                              onsubmit="return confirm('Supprimer ce rapport ?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="text-red-600 hover:underline">
-                                                Suppr.
-                                            </button>
-                                        </form>
+                                        
                                     </td>
                                 </tr>
                             @endforeach
