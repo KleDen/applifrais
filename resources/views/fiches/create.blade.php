@@ -69,15 +69,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="forfait_repas" class="block text-gray-700 font-bold mb-2">Repas</label>
-                                <input type="number" min="0" id="forfait_repas" name="forfait_repas" class="w-full border rounded px-3 py-2" placeholder="Nombre de repas">
+                                <input type="number" min="0" id="forfait_repas" name="forfait_repas" class="w-full border rounded px-3 py-2" placeholder="Nombre de repas" value="0">
                             </div>
                             <div>
                                 <label for="forfait_nuitee" class="block text-gray-700 font-bold mb-2">Nuitée</label>
-                                <input type="number" min="0" id="forfait_nuitee" name="forfait_nuitee" class="w-full border rounded px-3 py-2" placeholder="Nombre de nuitées">
+                                <input type="number" min="0" id="forfait_nuitee" name="forfait_nuitee" class="w-full border rounded px-3 py-2" placeholder="Nombre de nuitées" value="0">
                             </div>
                             <div>
                                 <label for="forfait_km" class="block text-gray-700 font-bold mb-2">Kilomètres</label>
-                                <input type="number" min="0" id="forfait_km" name="forfait_km" class="w-full border rounded px-3 py-2" placeholder="Nombre de kilomètres">
+                                <input type="number" min="0" id="forfait_km" name="forfait_km" class="w-full border rounded px-3 py-2" placeholder="Nombre de kilomètres" value="0">
                             </div>
                         </div>
                     </div>

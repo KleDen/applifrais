@@ -21,7 +21,7 @@ class FicheFraisController extends Controller
     public function index(): View
     {
         $user = auth()->user();
-        $fiches = FichesFrais::with(['lignesForfait.forfait', 'lignesHorsForfait', 'etat_id'])
+        $fiches = FichesFrais::with(['lignesForfait.forfait', 'lignesHorsForfait', 'etat'])
             ->where('user_id', $user->id)
             ->orderByDesc('mois')
             ->get();
@@ -40,21 +40,69 @@ class FicheFraisController extends Controller
      * Сохраняет новую fiche в БД.
      */
     public function store(Request $request): RedirectResponse
-    {
-        $data = $request->validate([
-            'mois'  => 'required|integer|min:1|max:12',
-            'annee' => 'required|integer|min:2000|max:2100',
-            // здесь можно добавить валидацию для остальных полей
+{
+    $data = $request->validate([
+        'mois' => 'required|string|max:2',
+        'annee' => 'required|integer',
+        'forfait_repas' => 'nullable|integer|min:0',
+        'forfait_nuitee' => 'nullable|integer|min:0',
+        'forfait_km' => 'nullable|integer|min:0',
+        'horsforfait_libelle.*' => 'nullable|string',
+        'horsforfait_montant.*' => 'nullable|numeric',
+        'horsforfait_justificatif.*' => 'nullable|file|mimes:jpg,png,pdf',
+    ]);
+
+    // Создание основной fiche
+    $fiche = FichesFrais::create([
+        'mois' => $data['mois'],
+        'annee' => $data['annee'],
+        'user_id' => auth()->id(),
+        'etat_id' => 'CL', // Créée
+        'montant_valide' => 0,
+        'nb_justificatifs' => count(array_filter($request->file('horsforfait_justificatif') ?? [])),
+        'date_modif' => now(),
+    ]);
+
+    // Сохранение lignes forfait
+    $forfaits = [
+    ['id' => 1, 'quantite' => $data['forfait_repas']],
+    ['id' => 2, 'quantite' => $data['forfait_nuitee']],
+    ['id' => 3, 'quantite' => $data['forfait_km']],
+];
+
+foreach ($forfaits as $forfait) {
+    if ($forfait['quantite'] > 0) {
+        $fiche->lignesForfait()->create([
+            'frais_forfait_id' => $forfait['id'],
+            'quantite' => $forfait['quantite'],
         ]);
-        $fiche = new FichesFrais($data);
-        $fiche->user_id = auth()->id();
-        $fiche->etat_id = 1; // ID начального состояния (например "CL" – "Créée")
-        $fiche->montant_valide = 0;    // начальное значение
-        $fiche->save();
-        return redirect()
-            ->route('fiches.index')
-            ->with('success', 'Fiche de frais créée avec succès.');
     }
+}
+    // Сохранение lignes hors forfait
+    $libelles = $data['horsforfait_libelle'] ?? [];
+    $montants = $data['horsforfait_montant'] ?? [];
+    $justificatifs = $request->file('horsforfait_justificatif') ?? [];
+
+    foreach ($libelles as $index => $libelle) {
+        if ($libelle && $montants[$index]) {
+            $path = null;
+            if (isset($justificatifs[$index])) {
+                $path = $justificatifs[$index]->store('justificatifs', 'public');
+            }
+            $fiche->lignesHorsForfait()->create([
+                'libelle' => $libelle,
+                'montant' => $montants[$index],
+                'justificatif' => $path,
+                'date' => now(),
+            ]);
+        }
+    }
+
+    return redirect()
+        ->route('fiches.index')
+        ->with('success', 'Fiche de frais créée avec succès.');
+}
+
 
     /**
      * Просмотр одной fiche.

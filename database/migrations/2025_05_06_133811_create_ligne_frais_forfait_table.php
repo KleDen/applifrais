@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('fiche_frais_id')->constrained('fiches_frais');
             $table->foreignId('frais_forfait_id')->constrained('frais_forfait');
-            $table->integer('quantite');
+            $table->integer('quantite')->default(0);
             $table->timestamps();
         });
     }
