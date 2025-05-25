@@ -5,9 +5,11 @@ use App\Http\Controllers\FicheFraisController;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::redirect('/', '/login');
 
 Route::get('/dashboard', function () {
     Carbon::setLocale('fr');

@@ -25,26 +25,10 @@
                     </div>
                 @endif
 
-                {{-- Форма редактирования --}}
+                {{-- Форма редактирования расходов --}}
                 <form method="POST" action="{{ route('fiches.update', $fiche) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-
-                    {{-- Mois et Année (readonly) --}}
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div>
-                            <label for="mois" class="block text-gray-700 font-bold mb-2">Mois</label>
-                            <input type="text" id="mois" name="mois" 
-                                   class="w-full border rounded px-3 py-2 bg-gray-100" 
-                                   value="{{ $fiche->mois }}" required readonly>
-                        </div>
-                        <div>
-                            <label for="annee" class="block text-gray-700 font-bold mb-2">Année</label>
-                            <input type="text" id="annee" name="annee" 
-                                   class="w-full border rounded px-3 py-2 bg-gray-100" 
-                                   value="{{ $fiche->annee }}" required readonly>
-                        </div>
-                    </div>
 
                     {{-- Frais forfaitaires --}}
                     <div class="mb-8">
@@ -55,22 +39,25 @@
                                 $nuitee = $fiche->lignesForfait->firstWhere('frais_forfait_id', 2)->quantite ?? 0;
                                 $km = $fiche->lignesForfait->firstWhere('frais_forfait_id', 3)->quantite ?? 0;
                             @endphp
+
                             <div>
                                 <label for="forfait_repas" class="block text-gray-700 font-bold mb-2">Repas</label>
-                                <input type="number" min="0" id="forfait_repas" name="forfait_repas" 
-                                       class="w-full border rounded px-3 py-2" 
+                                <input type="number" min="0" id="forfait_repas" name="forfait_repas"
+                                       class="w-full border rounded px-3 py-2"
                                        value="{{ $repas }}">
                             </div>
+
                             <div>
                                 <label for="forfait_nuitee" class="block text-gray-700 font-bold mb-2">Nuitée</label>
-                                <input type="number" min="0" id="forfait_nuitee" name="forfait_nuitee" 
-                                       class="w-full border rounded px-3 py-2" 
+                                <input type="number" min="0" id="forfait_nuitee" name="forfait_nuitee"
+                                       class="w-full border rounded px-3 py-2"
                                        value="{{ $nuitee }}">
                             </div>
+
                             <div>
                                 <label for="forfait_km" class="block text-gray-700 font-bold mb-2">Kilomètres</label>
-                                <input type="number" min="0" id="forfait_km" name="forfait_km" 
-                                       class="w-full border rounded px-3 py-2" 
+                                <input type="number" min="0" id="forfait_km" name="forfait_km"
+                                       class="w-full border rounded px-3 py-2"
                                        value="{{ $km }}">
                             </div>
                         </div>
@@ -84,47 +71,50 @@
                                 <div class="horsforfait-item mb-4 border-b pb-4">
                                     <div class="mb-2">
                                         <label class="block text-gray-700 font-bold mb-2">Libellé</label>
-                                        <input type="text" name="horsforfait_libelle[]" 
-                                               class="w-full border rounded px-3 py-2" 
+                                        <input type="text" name="horsforfait_libelle[]"
+                                               class="w-full border rounded px-3 py-2"
                                                value="{{ $ligne->libelle }}">
                                     </div>
                                     <div class="mb-2">
                                         <label class="block text-gray-700 font-bold mb-2">Montant (€)</label>
-                                        <input type="number" min="0" step="0.01" name="horsforfait_montant[]" 
-                                               class="w-full border rounded px-3 py-2" 
+                                        <input type="number" min="0" step="0.01" name="horsforfait_montant[]"
+                                               class="w-full border rounded px-3 py-2"
                                                value="{{ $ligne->montant }}">
                                     </div>
                                     <div class="mb-2">
-                                        <label class="block text-gray-700 font-bold mb-2">Justificatif (photo ou PDF)</label>
+                                        <label class="block text-gray-700 font-bold mb-2">Justificatif</label>
                                         @if($ligne->justificatif)
                                             <p class="text-sm mb-1">
-                                                <a href="{{ Storage::url($ligne->justificatif) }}" target="_blank" class="text-blue-600">Voir justificatif</a>
+                                                <a href="{{ Storage::url($ligne->justificatif) }}" target="_blank" class="text-blue-600 hover:underline">
+                                                    Voir justificatif
+                                                </a>
                                             </p>
                                         @endif
-                                        <input type="file" name="horsforfait_justificatif[]" 
-                                               accept="image/*,application/pdf" 
+                                        <input type="file" name="horsforfait_justificatif[]" accept="image/*,application/pdf"
                                                class="w-full border rounded px-3 py-2">
                                     </div>
-                                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
+                                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                        Supprimer
+                                    </button>
                                 </div>
                             @endforeach
                         </div>
-                        <button type="button" id="add-horsforfait" 
+                        <button type="button" id="add-horsforfait"
                                 class="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                            + Ajouter un frais
+                            + Ajouter un frais hors forfait
                         </button>
                     </div>
 
-                    {{-- Submit button --}}
+                    {{-- Bouton enregistrer --}}
                     <div class="flex justify-end">
-                        <button type="submit" 
+                        <button type="submit"
                                 class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold">
                             Enregistrer
                         </button>
                     </div>
                 </form>
 
-                {{-- Supprimer --}}
+                {{-- Formulaire suppression --}}
                 <form action="{{ route('fiches.destroy', $fiche) }}" method="POST" onsubmit="return confirm('Supprimer ce rapport ?');" class="mt-4">
                     @csrf
                     @method('DELETE')
@@ -141,7 +131,7 @@
         </div>
     </div>
 
-    {{-- JS pour добавления/удаления hors forfait --}}
+    {{-- JS для добавления/удаления hors forfait --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const horsforfaitList = document.getElementById('horsforfait-list');
@@ -159,10 +149,10 @@
                         <input type="number" min="0" step="0.01" name="horsforfait_montant[]" class="w-full border rounded px-3 py-2" placeholder="Montant de la dépense">
                     </div>
                     <div class="mb-2">
-                        <label class="block text-gray-700 font-bold mb-2">Justificatif (photo ou PDF)</label>
+                        <label class="block text-gray-700 font-bold mb-2">Justificatif</label>
                         <input type="file" name="horsforfait_justificatif[]" accept="image/*,application/pdf" class="w-full border rounded px-3 py-2">
                     </div>
-                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
+                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer le frais hors forfait</button>
                 `;
                 horsforfaitList.appendChild(item);
             });
