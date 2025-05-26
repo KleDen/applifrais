@@ -37,7 +37,8 @@
                             @php
                                 $repas = $fiche->lignesForfait->firstWhere('frais_forfait_id', 1)->quantite ?? 0;
                                 $nuitee = $fiche->lignesForfait->firstWhere('frais_forfait_id', 2)->quantite ?? 0;
-                                $km = $fiche->lignesForfait->firstWhere('frais_forfait_id', 3)->quantite ?? 0;
+                                $etape = $fiche->lignesForfait->firstWhere('frais_forfait_id', 3)->quantite ?? 0;
+                                $km = $fiche->lignesForfait->firstWhere('frais_forfait_id', 4)->quantite ?? 0;
                             @endphp
 
                             <div>
@@ -54,6 +55,13 @@
                                        value="{{ $nuitee }}">
                             </div>
 
+                            <div>
+                                <label for="forfait_etape" class="block text-gray-700 font-bold mb-2">Relais étape</label>
+                                <input type="number" min="0" id="forfait_etape" name="forfait_etape"
+                                       class="w-full border rounded px-3 py-2"
+                                       value="{{ $etape }}">
+                            </div>                            
+                            
                             <div>
                                 <label for="forfait_km" class="block text-gray-700 font-bold mb-2">Kilomètres</label>
                                 <input type="number" min="0" id="forfait_km" name="forfait_km"
@@ -152,7 +160,7 @@
                         <label class="block text-gray-700 font-bold mb-2">Justificatif</label>
                         <input type="file" name="horsforfait_justificatif[]" accept="image/*,application/pdf" class="w-full border rounded px-3 py-2">
                     </div>
-                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer le frais hors forfait</button>
+                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
                 `;
                 horsforfaitList.appendChild(item);
             });

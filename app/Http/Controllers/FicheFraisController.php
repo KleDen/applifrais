@@ -46,10 +46,12 @@ class FicheFraisController extends Controller
         'annee' => 'required|integer',
         'forfait_repas' => 'nullable|integer|min:0',
         'forfait_nuitee' => 'nullable|integer|min:0',
+        'forfait_etape' => 'nullable|integer|min:0',
         'forfait_km' => 'nullable|integer|min:0',
         'horsforfait_libelle.*' => 'nullable|string',
         'horsforfait_montant.*' => 'nullable|numeric',
-        'horsforfait_justificatif.*' => 'nullable|file|mimes:jpg,png,pdf',
+        'horsforfait_justificatif.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+
     ]);
 
     // Создание основной fiche
@@ -67,7 +69,8 @@ class FicheFraisController extends Controller
     $forfaits = [
     ['id' => 1, 'quantite' => $data['forfait_repas']],
     ['id' => 2, 'quantite' => $data['forfait_nuitee']],
-    ['id' => 3, 'quantite' => $data['forfait_km']],
+    ['id' => 3, 'quantite' => $data['forfait_etape']],
+    ['id' => 4, 'quantite' => $data['forfait_km']],
 ];
 
 foreach ($forfaits as $forfait) {
@@ -120,6 +123,7 @@ foreach ($forfaits as $forfait) {
     $data = $request->validate([
         'forfait_repas'   => 'nullable|integer|min:0',
         'forfait_nuitee'  => 'nullable|integer|min:0',
+        'forfait_etape'      => 'nullable|integer|min:0',
         'forfait_km'      => 'nullable|integer|min:0',
         'horsforfait_libelle.*'     => 'nullable|string',
         'horsforfait_montant.*'     => 'nullable|numeric',
@@ -136,11 +140,12 @@ foreach ($forfaits as $forfait) {
     $fiche->date_modif = now();
     $fiche->save();
 
-    // 3) Обновляем три forfait-строки
+    // 3) Обновляем forfait-строки
     $forfaits = [
-        1 => $data['forfait_repas']  ?? 0,  // repas
-        2 => $data['forfait_nuitee'] ?? 0,  // nuitée
-        3 => $data['forfait_km']     ?? 0,  // km
+        1 => $data['forfait_repas']  ?? 0, 
+        2 => $data['forfait_nuitee'] ?? 0, 
+        3 => $data['forfait_etape']     ?? 0,  
+        4 => $data['forfait_km']     ?? 0, 
     ];
 
     foreach ($forfaits as $forfaitId => $quantite) {

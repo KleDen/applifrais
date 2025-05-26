@@ -6,8 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            {{-- флеш-сообщение об успехе --}}
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             @if(session('success'))
                 <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
                     {{ session('success') }}
@@ -21,35 +20,39 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-gray-50">
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Mois / Année</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Statut</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Créé le</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Modifié le</th>
                                 <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">Forfait (€)</th>
                                 <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">Hors forfait (€)</th>
+                                <th class="px-4 py-2 text-right text-sm font-medium text-gray-500">Total (€)</th>
                                 <th class="px-4 py-2 text-center text-sm font-medium text-gray-500">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             @foreach($fiches as $fiche)
+                                @php
+                                    $sumForfait     = $fiche->lignesForfait->sum(fn($l) => $l->quantite * $l->forfait->montant);
+                                    $sumHorsForfait = $fiche->lignesHorsForfait->sum('montant');
+                                @endphp
                                 <tr>
-                                    {{-- Carbon для форматирования --}}
                                     <td class="px-4 py-2">
-                                        {{ \Carbon\Carbon::create($fiche->annee, $fiche->mois, 1)->translatedFormat('F Y') }}
+                                        {{-- jour chiffre, mois mot, à heure:minute en une ligne --}}
+                                        {{ $fiche->created_at->translatedFormat('j F \à H:m') }}
                                     </td>
-                                    {{-- libellé de l'état --}}
-                                    <td class="px-4 py-2">{{ $fiche->etat->libelle }}</td>
-                                    {{-- сумма forfait --}}
+                                    <td class="px-4 py-2">
+                                        {{ $fiche->updated_at->translatedFormat('j F \à H:m') }}
+                                    </td>
                                     <td class="px-4 py-2 text-right">
-                                        {{ number_format($fiche->lignesForfait->sum(fn($l) => $l->quantite * $l->forfait->montant), 2) }}
+                                        {{ number_format($sumForfait, 2) }}
                                     </td>
-                                    {{-- сумма hors forfait --}}
                                     <td class="px-4 py-2 text-right">
-                                        {{ number_format($fiche->lignesHorsForfait->sum('montant'), 2) }}
+                                        {{ number_format($sumHorsForfait, 2) }}
                                     </td>
-                                     {{-- EDIT --}}
+                                    <td class="px-4 py-2 text-right font-semibold">
+                                        {{ number_format($sumForfait + $sumHorsForfait, 2) }}
+                                    </td>
                                     <td class="px-4 py-2 text-center space-x-2">
-                                        <a href="{{ route('fiches.edit', $fiche) }}" 
-                                           class="text-yellow-600 hover:underline">Éditer</a>
-                                        
+                                        <a href="{{ route('fiches.edit', ['fiche' => $fiche->id]) }}" class="text-yellow-600 hover:underline">Éditer</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -57,10 +60,8 @@
                     </table>
                 @endif
 
-                {{-- Кнопка «Créer une fiche» --}}
                 <div class="mt-6 text-right">
-                    <a href="{{ route('fiches.create') }}"
-                       class="inline-block px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
+                    <a href="{{ route('fiches.create') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
                         ➕ Créer une fiche
                     </a>
                 </div>
@@ -68,7 +69,3 @@
         </div>
     </div>
 </x-app-layout>
-{{-- 
-    Этот шаблон отображает список отчетов пользователя. 
-    Он включает в себя таблицу с отчетами, их статусами и действиями (просмотр, редактирование, удаление).
-    Также есть кнопка для создания нового отчета.

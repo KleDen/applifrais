@@ -14,6 +14,7 @@
                     </h1>
                     <p class="text-gray-600 mt-1">
                         Bienvenue sur votre espace Applifrais.
+                        
                     </p>
                 </div>
                 <div class="mb-8">
@@ -21,19 +22,16 @@
                 </div>
                 <div class="flex flex-col gap-4">
                     <a href="{{ route('fiches.create') }}"
-                       class="w-full inline-block px-6 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 transition">
+                       class="w-full inline-block px-6 py-4 bg-gsbblue hover:bg-gsbblue-dark text-white text-lg font-semibold rounded-lg shadow-md transition">
                         ➕ Créer une fiche de frais
                     </a>
                     <a href="{{ route('fiches.index') }}"
-                       class="w-full inline-block px-6 py-4 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition">
+                       class="w-full inline-block px-6 py-4 bg-gsbnavy hover:bg-gsbnavy-dark text-white text-lg font-semibold rounded-lg shadow-md transition">
                         📄 Consulter mes fiches de frais
-                    </a>
-                    <a href="#"
-                       class="w-full inline-block px-6 py-4 bg-yellow-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition">
-                        ✏️ Modifier une fiche
                     </a>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</x-app-layout>1

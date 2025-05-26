@@ -76,6 +76,10 @@
                                 <input type="number" min="0" id="forfait_nuitee" name="forfait_nuitee" class="w-full border rounded px-3 py-2" placeholder="Nombre de nuitées" value="0">
                             </div>
                             <div>
+                                <label for="forfait_etape" class="block text-gray-700 font-bold mb-2">Relais étape</label>
+                                <input type="number" min="0" id="forfait_etape" name="forfait_etape" class="w-full border rounded px-3 py-2" placeholder="Nombre de relais étape" value="0">
+                            </div>
+                            <div>
                                 <label for="forfait_km" class="block text-gray-700 font-bold mb-2">Kilomètres</label>
                                 <input type="number" min="0" id="forfait_km" name="forfait_km" class="w-full border rounded px-3 py-2" placeholder="Nombre de kilomètres" value="0">
                             </div>
@@ -97,7 +101,7 @@
                                     <label for="horsforfait_justificatif[]" class="block text-gray-700 font-bold mb-2">Justificatif (photo ou PDF)</label>
                                     <input type="file" name="horsforfait_justificatif[]" accept="image/*,application/pdf" class="w-full border rounded px-3 py-2">
                                 </div>
-                                <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
+                                <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer </button>
                             </div>
                         </div>
                         <button type="button" id="add-horsforfait" class="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">+ Ajouter une frais</button>
@@ -122,7 +126,7 @@
                                         <label class="block text-gray-700 font-bold mb-2">Justificatif (photo ou PDF)</label>
                                         <input type="file" name="horsforfait_justificatif[]" accept="image/*,application/pdf" class="w-full border rounded px-3 py-2">
                                     </div>
-                                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Удалить</button>
+                                    <button type="button" class="remove-horsforfait bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
                                 `;
                                 horsforfaitList.appendChild(item);
                             });
