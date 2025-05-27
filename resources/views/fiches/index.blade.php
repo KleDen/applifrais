@@ -37,10 +37,10 @@
                                 <tr>
                                     <td class="px-4 py-2">
                                         {{-- jour chiffre, mois mot, à heure:minute en une ligne --}}
-                                        {{ $fiche->created_at->translatedFormat('j F \à H:m') }}
+                                        {{ $fiche->created_at->translatedFormat('j F \à H:i') }}
                                     </td>
                                     <td class="px-4 py-2">
-                                        {{ $fiche->updated_at->translatedFormat('j F \à H:m') }}
+                                        {{ $fiche->updated_at->translatedFormat('j F \à H:i') }}
                                     </td>
                                     <td class="px-4 py-2 text-right">
                                         {{ number_format($sumForfait, 2) }}
